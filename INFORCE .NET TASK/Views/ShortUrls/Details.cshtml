@@ -1,0 +1,57 @@
+﻿@model INFORCE_.NET_TASK.Models.ShortUrl
+
+@{
+    ViewData["Title"] = "URL Details";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">URL Details</h1>
+
+    <div class="card shadow">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Short URL Information</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Original URL</dt>
+                <dd class="col-sm-9">
+                    <a href="@Model.OriginalUrl" target="_blank" class="text-break">
+                        @Model.OriginalUrl
+                    </a>
+                </dd>
+
+                <dt class="col-sm-3">Short Code</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-secondary font-monospace">@Model.ShortCode</span>
+                </dd>
+
+                <dt class="col-sm-3">Short URL</dt>
+                <dd class="col-sm-9">
+                    <a href="@Url.Action("RedirectUrl", "Home", new { shortCode = Model.ShortCode })"
+                       target="_blank" class="text-decoration-none">
+                        @Context.Request.Scheme://@Context.Request.Host/r/@Model.ShortCode
+                    </a>
+                </dd>
+
+                <dt class="col-sm-3">Created By</dt>
+                <dd class="col-sm-9">@Model.CreatedBy?.Username</dd>
+
+                <dt class="col-sm-3">Created Date</dt>
+                <dd class="col-sm-9">@Model.CreatedDate.ToString("f")</dd>
+
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+
+            @if (Model.CreatedBy != null)
+            {
+                <a href="@Url.Action("Create", "Home")" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Create Another
+                </a>
+            }
+        </div>
+    </div>
+</div>
